@@ -1,6 +1,20 @@
-import {FcGoogle} from 'react-icons/fc';
+import {FcGoogle} from 'react-icons/fc'
+import {useForm} from 'react-hook-form'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const {register, handleSubmit, formState: {errors}} = useForm()
+  const navigate = useNavigate()
+
+  const onSubmit = async (data: any) => {
+    const response = await axios.post('http://localhost:8000/api/v1/users/login/', data)
+
+    localStorage.setItem('token', response.data.token)
+
+    navigate('/')
+  }
+
   return (
     <div className="bg-gradient-to-r from-purple to-blue w-[100vw] h-[100vh] flex items-center justify-center">
       <div className="bg-white w-[400px] p-[40px] rounded">
@@ -8,14 +22,24 @@ const Login = () => {
         <button className="flex gap-5 items-center py-3 w-[100%] justify-center border rounded border-black"><FcGoogle size={25}/>Inicia sesion con Google</button>
         <div className="text-sm text-center text-black">No tienes una cuenta? <a href="#" className="font-semibold">Puedes crearla aqui</a></div>
         <hr className="my-10"/>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label className="flex flex-col w-[100%] gap-2 mb-4">
             <span>Email</span>
-            <input type="email" className="border boder-black outline-none h-[40px] px-1"/>
+            <input 
+              type="email" 
+              {...register('email', {required: true})} 
+              className="border boder-black outline-none h-[40px] px-1"
+            />
+            {errors.email && <span className="text-xs text-red">El email es requerido</span>}
           </label>
           <label className="flex flex-col w-[100%] gap-2 mb-4">
             <span>Password</span>
-            <input type="password" className="border boder-black outline-none h-[40px] px-1"/>
+            <input 
+              type="password" 
+              {...register('password', {required:true, minLength: 6})} 
+              className="border boder-black outline-none h-[40px] px-1"
+            />
+            {errors.password && <span className="text-xs text-red">El password es requerido y debe contener almenos 6 caracteres</span>}
           </label>
           <label className="flex items-center gap-2 mb-5">
             <input type="checkbox" />

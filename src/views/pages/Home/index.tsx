@@ -6,8 +6,7 @@ const Home = () => {
     <div className="w-[100%]">
       <h1 className="text-xl font-semibold mb-5">Profile</h1>
       <div className="w-[100%] h-[200px] bg-blue relative mb-[130px]">
-        <img className="absolute left-0 top-0 w-full h-full object-cover" src="https://wallpapercave.com/wp/wp3203389.jpg" alt="banner image" />
-        <div className="absolute bottom-[-80px] left-[50px] flex items-end justify-between w-full pr-[80px]">
+        <img className="absolute left-0 top-0 w-full h-full object-cover" src="https://wallpapercave.com/wp/wp3203389.jpg" alt="banner image" /> <div className="absolute bottom-[-80px] left-[50px] flex items-end justify-between w-full pr-[80px]">
           <div className="flex items-end gap-2">
             <div className="w-[200px] h-[200px] rounded-full bg-black overflow-hidden border-8 border-blue">
               <img className="w-full h-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS4bWG2aS2z_ao8B5ad7ry837IeOg_Ki2hTg&usqp=CAU" alt="image profile" />

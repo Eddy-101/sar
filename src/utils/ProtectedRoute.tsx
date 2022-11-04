@@ -1,13 +1,20 @@
-import {useNavigate, Route} from 'react-router-dom';
-const ProtectedRoute = ({children, ...attrs}: any) => {
-  const navigate = useNavigate();
-  const isAuthenticated = false;
+import { useEffect, useState } from "react"
+import { Navigate, useNavigate } from "react-router-dom"
 
-  return {
-    isAuthenticated ? 
-      <div>Si</div>:
-      <div>No</div>
-  }
+const ProtectedRoute = ({children}: {children: JSX.Element}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setIsAuthenticated(true)
+      navigate('/')
+    }   
+  },[])
+
+  if(!isAuthenticated) return <Navigate to="/login" />
+
+  return children
 }
 
 export default ProtectedRoute;

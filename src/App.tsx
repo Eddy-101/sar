@@ -1,3 +1,4 @@
+import {lazy, Suspense} from 'react';
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -6,29 +7,34 @@ import {
 } from 'react-router-dom';
 
 // Pages
-import Home from './views/pages/Home';
-import CreateData from './views/pages/CreateData';
-import Login from './views/auth/Login';
-import Layout from './views/Layout';
-import ProtectedRoute from './utils/ProtectedRoute';
-// import UserState from './context/Users/UserState';
+const ProtectedRoute = lazy(() => import("./utils/ProtectedRoute"))
+const Home = lazy(() => import("./views/pages/Home"))
+const Login = lazy(() => import ("./views/auth/Login"))
+const Layout = lazy(() => import("./views/Layout"))
+const CreateData = lazy(() => import("./views/pages/CreateData"))
+const Profile = lazy(() => import("./views/pages/Profile"))
+const Status = lazy(() => import("./views/pages/Status"))
 
 function App() {
   return (
     <div>
       <Router>
-        <Routes>
+        <Suspense fallback={<span>Loading...</span>}>
+          <Routes>
 
-          {/*Routes Protected*/}
-          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-            <Route path="" element={<Home />}>
-              <Route path="update" element={<CreateData />}/>
+            {/*Routes Protected*/}
+            <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+              <Route path="" element={<Home />}>
+                <Route path="" element={<Profile />} />
+                <Route path="update" element={<CreateData />}/>
+                <Route path="status" element={<Status />}/>
+              </Route>
             </Route>
-          </Route>
 
-          <Route path="/login" element={<Login />}/>
+            <Route path="/login" element={<Login />}/>
 
-        </Routes>
+          </Routes>
+        </Suspense>
       </Router>
     </div>
   )

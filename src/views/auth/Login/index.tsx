@@ -9,9 +9,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     const response = await axios.post('http://localhost:8000/api/v1/users/login/', data)
-
     localStorage.setItem('token', response.data.token)
-
     navigate('/')
   }
 
@@ -19,9 +17,6 @@ const Login = () => {
     <div className="bg-gradient-to-r from-purple to-blue w-[100vw] h-[100vh] flex items-center justify-center">
       <div className="bg-white w-[400px] p-[40px] rounded">
         <h1 className='text-black font-semibold text-2xl text-center mb-8'>Login</h1>
-        <button className="flex gap-5 items-center py-3 w-[100%] justify-center border rounded border-black"><FcGoogle size={25}/>Inicia sesion con Google</button>
-        <div className="text-sm text-center text-black">No tienes una cuenta? <a href="#" className="font-semibold">Puedes crearla aqui</a></div>
-        <hr className="my-10"/>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label className="flex flex-col w-[100%] gap-2 mb-4">
             <span>Email</span>
@@ -36,10 +31,10 @@ const Login = () => {
             <span>Password</span>
             <input 
               type="password" 
-              {...register('password', {required:true, minLength: 6})} 
+              {...register('password', {required:true})} 
               className="border boder-black outline-none h-[40px] px-1"
             />
-            {errors.password && <span className="text-xs text-red">El password es requerido y debe contener almenos 6 caracteres</span>}
+            {errors.password && <span className="text-xs text-red">El password es requerido</span>}
           </label>
           <label className="flex items-center gap-2 mb-5">
             <input type="checkbox" />
